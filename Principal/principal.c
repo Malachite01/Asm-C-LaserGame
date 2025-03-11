@@ -7,6 +7,10 @@
 // Prototype de la fonction, définie en ASM dans le fichier GestionSon.s
 extern void GestionSon_callback(void);
 
+extern int SortieSon;
+
+extern int PeriodeSonMicroSec;
+
 int main(void) {
 	// ===========================================================================
 	// ============= INIT PERIPH (faites qu'une seule fois)  =====================
@@ -22,7 +26,8 @@ int main(void) {
 	//============================================================================	
 
 	// Appel de la fonction toutes les 1µs
-	ServJeuLASER_Son_Init(1000, 0, GestionSon_callback);
+	ServJeuLASER_Son_Init(PeriodeSonMicroSec, 0, GestionSon_callback);
+	
 
 	while	(1) {
 		
