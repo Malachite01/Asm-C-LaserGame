@@ -11,8 +11,13 @@
 	EXPORT SortieSon ;pour le logic visu
 
 	;Fonctions exportées
-	EXPORT GestionSon_callback	
-
+	EXPORT GestionSon_Start	
+	EXPORT GestionSon_Stop	
+	EXPORT GestionSon_callback
+	
+	;Fonctions importées
+	IMPORT PWM_Set_Value_TIM3_Ch3
+		
 	; ====================== zone de réservation de données,  ======================================
 	;Section RAM (read only) :
 	area    mesdata,data,readonly
@@ -30,6 +35,24 @@ SortieSon DCD 0 ;var sur 32 bits (DCD)
 	area    moncode,code,readonly
 
 
+	; Fonction qui met l'index courant a 0 pour jouer le son
+GestionSon_Start PROC
+	LDR r1, =GestionSon_Index 
+	MOV r0, #0
+	STR r0, [r1]
+	BX lr
+	ENDP
+	
+	; Fonction qui met l'index courant a LongueurSon pour stopper le son (arriver a la fin du bruit)
+GestionSon_Stop PROC
+	LDR r1, =GestionSon_Index 
+	LDR r2, =LongueurSon
+	LDR r0, [r2]
+	STR r0, [r1]
+	BX lr
+	ENDP
+	
+
 	;Fonction GestionSon_Callback utilisée dans principal.c
 GestionSon_callback PROC
 	PUSH {r4,r5}
@@ -42,7 +65,7 @@ GestionSon_callback PROC
 	LDR r5, =LongueurSon
 	LDR r5, [r5]
 	CMP r0, r5
-	BGE FinParcoursTableau ;Si index courant plus grand ou egal a taille tableau, direction fin de boucle
+	BGE FinParcoursTableau ;Si index courant plus grand ou egal a taille tableau, direction fin de fonction
 	
 	;--------Partie lecture du tab son[index]
 	LDR r2, =Son ;recup adresse du tab
@@ -59,7 +82,11 @@ GestionSon_callback PROC
 	
 	;--------Partie stockage de la valeur du tableau a l'echelle dans SortieSon
 	LDR r4, =SortieSon ;Adresse
-	STR r3, [r4] ;stockage de la valeur lue dans SortieSon
+	MOV r0, r3
+	STR r0, [r4] ;stockage de la valeur lue dans SortieSon (on a mis r0 au lieu de r3)
+	PUSH {lr, r3, r2, r1}
+	BL PWM_Set_Value_TIM3_Ch3
+	POP{lr, r3, r2, r1}
 	
 	;--------Partie incrémentation de l'index
 	LDR r0, [r1] ; récupération de l'index initial pour l'incrémenter (car r0 est multiplié par 2 pour la lecture du bon index)

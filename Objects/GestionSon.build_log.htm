@@ -22,25 +22,28 @@ Dialog DLL:      TARMSTM.DLL V1.67.1.0
  
 <h2>Project:</h2>
 U:\MATLAB\TP_CHTI\ASSEMBLEUR\1_SON\PjetKEL_GestionSon\GestionSon.uvprojx
-Project File Date:  02/01/2025
+Project File Date:  03/31/2025
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.22', folder: 'C:\Program Files\Keil_5.4\ARM\ARMCLANG\Bin'
-Rebuild target 'Simulation'
+Rebuild target 'CibleSondeKEIL'
+Note: source file '.\GestionSon\GestionSon.h' - object file renamed from '.\Objects\GestionSon.o' to '.\Objects\gestionson_1.o'.
+compiling GestionSon.h...
+Principal/principal.c(3): error: 'GestionSon.h' file not found
+    3 | #include "GestionSon.h"
+      |          ^~~~~~~~~~~~~~
+1 error generated.
 compiling principal.c...
-compiling system_stm32f10x.c...
-compiling ServiceJeuLaser.c...
-assembling startup_stm32f10x_md.s...
-"GestionSon/GestionSon.s", line 76: Warning: A1581W: Added 2 bytes of padding at address 0x3e
-   76 00000040  END
+"GestionSon/GestionSon.s", line 102: Warning: A1581W: Added 2 bytes of padding at address 0x5e
+  102 00000060  END
 0 Errors, 1 Warning
 assembling GestionSon.s...
+assembling startup_stm32f10x_md.s...
+compiling system_stm32f10x.c...
+compiling ServiceJeuLaser.c...
 armclang: warning: argument unused during compilation: '-D __UVISION_VERSION=540' [-Wunused-command-line-argument]
 assembling bruitverre.asm...
-linking...
-Program Size: Code=2996 RO-data=11300 RW-data=172 ZI-data=1024  
-FromELF: creating hex file...
-".\Objects\GestionSon.axf" - 0 Error(s), 1 Warning(s).
+".\Objects\GestionSon.axf" - 1 Error(s), 1 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -58,7 +61,7 @@ Package Vendor: Keil
 
 <h2>Collection of Component include folders:</h2>
   ./RTE/Device/STM32F103RB
-  ./RTE/_Simulation
+  ./RTE/_CibleSondeKEIL
   C:/ProgramData/keil/ARM/Pack/ARM/CMSIS/6.1.0/CMSIS/Core/Include
   C:/ProgramData/keil/ARM/Pack/Keil/STM32F1xx_DFP/2.4.1/Device/Include
 
@@ -68,10 +71,11 @@ Package Vendor: Keil
 
    * Component: Keil::Device:Startup@1.0.0
       Source file:   Device/Source/system_stm32f10x.c
-      Include file:  RTE_Driver/Config/RTE_Device.h
       Source file:   Device/Source/ARM/STM32F1xx_OPT.s
       Source file:   Device/Source/ARM/startup_stm32f10x_md.s
-Build Time Elapsed:  00:00:02
+      Include file:  RTE_Driver/Config/RTE_Device.h
+Target not created.
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>

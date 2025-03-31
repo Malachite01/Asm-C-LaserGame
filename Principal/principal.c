@@ -1,7 +1,6 @@
-
-
 #include "DriverJeuLaser.h"
 #include "ServiceJeuLaser.h"
+#include "../GestionSon/GestionSon.h"
 
 
 // Prototype de la fonction, définie en ASM dans le fichier GestionSon.s
@@ -10,6 +9,11 @@ extern void GestionSon_callback(void);
 extern int SortieSon;
 
 extern int PeriodeSonMicroSec;
+
+extern int GestionSon_Index;
+
+extern int LongueurSon;
+
 
 int main(void) {
 	// ===========================================================================
@@ -24,11 +28,12 @@ int main(void) {
 
 
 	//============================================================================	
-
-	// Appel de la fonction toutes les 1µs
-	ServJeuLASER_Son_Init(PeriodeSonMicroSec, 0, GestionSon_callback);
 	
-
+	
+	// Appel de la fonction toutes les PeriodeSonMicroSec
+	ServJeuLASER_Son_Init(PeriodeSonMicroSec, 0, GestionSon_callback);
+	GestionSon_Stop(); //Arréter le son au démarrage
+	
 	while	(1) {
 		
 	}
