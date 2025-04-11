@@ -1,3 +1,6 @@
+#ifndef GESTIONSON_H__
+#define GESTIONSON_H__
+
 /**
 	* @brief  Joue le son bruitverre.asm
 	* @param  None
@@ -11,3 +14,5 @@ void GestionSon_Start();
   * @retval None
   */
 void GestionSon_Stop();
+
+#endif
