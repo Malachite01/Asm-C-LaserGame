@@ -7,6 +7,6 @@
 	* @param  k nb de periode sur lesquelles les echantillons sont étalés
   * @retval module au carré
   */
-int32_t calculer_DFT_Fract(int16_t *Signal, int nb_echantillons, int k);
+uint32_t calculer_DFT_Fract(int16_t *Signal, int nb_echantillons, int k);
 
 #endif

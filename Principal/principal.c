@@ -21,10 +21,19 @@ extern int LongueurSon;
 // Nombre d'échantillons
 int M = 64;
 
-float ModuleCarre;
+extern int16_t LeSignalFract[]; //Signal fractionnaire pour tester
 
-extern int16_t LeSignalFract[];
+short int DMA_Tab[64]; //Tableau du relevé périodique des 64 echantillons
 
+unsigned int DFT_Tab[64]; //Tableau de résultat de DFT
+
+//Relevé périodique d'un bloc de 64 échantillons, en faire une DFT
+void DMA_callback(void) {
+	ServJeuLASER_StartDMA(); //Acquisition d'un nouveau bloc de 64 echantillons pour la DFT
+	for (int k = 0; k<64; k++){
+		DFT_Tab[k] = calculer_DFT_Fract(DMA_Tab, M, k); //Remplissage du tableau avec les nouveaux résultats de la DFT
+	}
+}
 
 int main(void) {
 	// ===========================================================================
@@ -37,18 +46,15 @@ int main(void) {
 	/* Configuration du son (voir ServiceJeuLaser.h) 
 	 Insérez votre code d'initialisation des parties matérielles gérant le son ....*/	
 
-
+	/* Initialisation de l'adresse du tableau DMA, pour le relevé périodique d'un bloc de 64 échantillons */
+	ServJeuLASER_ADC_DMA(DMA_Tab);
 	//============================================================================	
 	
-	
-	// Appel de la fonction toutes les PeriodeSonMicroSec
-	GestionSon_Stop(); //Arréter le son au démarrage
-	ServJeuLASER_Son_Init(PeriodeSonMicroSec, 0, GestionSon_callback);
+	GestionSon_Stop(); //Ne pas jouer le son au démarrage
+	ServJeuLASER_Son_Init(PeriodeSonMicroSec, 0, GestionSon_callback); //Appel de la fonction toutes les PeriodeSonMicroSec
 	
 	
-	for (int k = 0; k<64; k++){
-		ModuleCarre = calculer_DFT_Fract(LeSignalFract, M, k);
-	}
+	ServJeuLASER_Systick_IT_Init(5000, 1, DMA_callback); //Configure le timer Systick pour qu'il génère une interruption périodique
 	
 	while	(1) {
 		
