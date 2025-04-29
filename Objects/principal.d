@@ -7,4 +7,5 @@
   Principal\..\ServiceDFT\DFT.h \
   Principal\..\ServiceDFT_Fract\DFT_Fract.h \
   Principal\..\ServiceDFT\Signal_float.h \
-  Principal\..\ServiceDFT_Fract\Signal_4_12.h
+  Principal\..\ServiceDFT_Fract\Signal_4_12.h \
+  Principal\..\ModuleAffichage\Affichage_Valise.h
